@@ -1,36 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TopdownController : MonoBehaviour {
-
-//////////////////////////////////////////////////////////////
-// CameraRelativeControl.js
-// Penelope iPhone Tutorial
-//
-// CameraRelativeControl creates a control scheme similar to what
-// might be found in 3rd person platformer games found on consoles.
-// The left stick is used to move the character, and the right
-// stick is used to rotate the camera around the character.
-// A quick double-tap on the right joystick will make the 
-// character jump. 
-//////////////////////////////////////////////////////////////
-
-
+public class TopdownController : MonoBehaviour 
+{
     public Joystick moveJoystick;
-    public Joystick rotateJoystick;
-
-    //public Transform cameraPivot;						// The transform used for camera rotation
-    //public Transform cameraTransform;					// The actual transform of the camera
 
     public float speed = 5;								// Ground speed
     public float jumpSpeed = 8;
     public float inAirMultiplier = 0.25f; 				// Limiter for ground speed while jumping
+    public bool alive = true;
 
     private Transform thisTransform;
     private CharacterController character;
     private Vector3 velocity;						// Used for continuing momentum while in air
     private bool canJump = true;
-    bool alive = true;
+    Quaternion zeroQuaternion = new Quaternion(0, 0, 0, 0);
 
     void Start()
     {
@@ -48,7 +32,6 @@ public class TopdownController : MonoBehaviour {
     {
         // Disable joystick when the game ends	
         moveJoystick.Disable();
-        rotateJoystick.Disable();
         
         // Don't allow any more control changes when the game ends
         this.enabled = false;
@@ -57,33 +40,37 @@ public class TopdownController : MonoBehaviour {
    Vector3 previousPosition;
     public void Update()
     {
-        if(alive)
-        {
-
-            Quaternion q = new Quaternion(0, 0, 0, 0);
-            transform.rotation = q;
-        }
-        Vector3 movement = new Vector3(moveJoystick.position.x, moveJoystick.position.y, 0);
-        // We only want the camera-space horizontal direction
-        movement.z = 0;
-        movement.Normalize(); // Adjust magnitude after ignoring vertical movement
-        
-        // Let's use the largest component of the joystick position for the speed.
-        Vector2 absJoyPos = new Vector2( Mathf.Abs( moveJoystick.position.x ), Mathf.Abs( moveJoystick.position.y ) );
-        movement *= speed * ( ( absJoyPos.x > absJoyPos.y ) ? absJoyPos.x : absJoyPos.y );
-        
-        movement += velocity;
-        movement += Physics.gravity;
-        movement *= Time.deltaTime;
-
-        if (moveJoystick.position == Vector2.zero) 
+        if (moveJoystick.position == Vector2.zero)
         {
             transform.position = previousPosition;
         }
         else
         {
+            Vector3 movement = new Vector3(moveJoystick.position.x, moveJoystick.position.y, 0);
+
+            movement.z = 0;
+            movement.Normalize(); // Adjust magnitude after ignoring vertical movement
+
+            // Let's use the largest component of the joystick position for the speed.
+            Vector2 absJoyPos = new Vector2(Mathf.Abs(moveJoystick.position.x), Mathf.Abs(moveJoystick.position.y));
+            movement *= speed * ((absJoyPos.x > absJoyPos.y) ? absJoyPos.x : absJoyPos.y);
+
+            movement += velocity;
+            movement += Physics.gravity;
+            movement *= Time.deltaTime;
+
             transform.position += movement;
         }
         previousPosition = transform.position;
+
+        if (alive)
+        {
+            //Don't trip over
+            transform.rotation = zeroQuaternion;
+        }
+        else
+        {
+
+        }
     }
 }

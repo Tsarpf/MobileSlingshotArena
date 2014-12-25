@@ -106,11 +106,13 @@ public class Joystick : MonoBehaviour
         fingerDownPos = Vector2.zero;
         
         Color derp = gui.color;
+        /*
         if (touchPad)
         {
             derp.a = 0.025f;
             gui.color = derp;
         }
+        */
 
     }
 
@@ -172,9 +174,9 @@ public class Joystick : MonoBehaviour
                     
                     if ( touchPad )
                     {
-                        Color derp = gui.color;
-                        derp.a = 0.15f;
-                        gui.color = derp;
+                        //Color derp = gui.color;
+                        //derp.a = 0.15f;
+                        //gui.color = derp;
                         
                         lastFingerId = touch.fingerId;
                         fingerDownPos = touch.position;
