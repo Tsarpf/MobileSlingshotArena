@@ -46,9 +46,9 @@ public class TopdownController : MonoBehaviour
         }
         else
         {
-            Vector3 movement = new Vector3(moveJoystick.position.x, moveJoystick.position.y, 0);
+            Vector3 movement = new Vector3(moveJoystick.position.x, 0, moveJoystick.position.y);
 
-            movement.z = 0;
+            movement.y = 0;
             movement.Normalize(); // Adjust magnitude after ignoring vertical movement
 
             // Let's use the largest component of the joystick position for the speed.
@@ -71,6 +71,12 @@ public class TopdownController : MonoBehaviour
         else
         {
 
+        }
+
+        if(transform.position.y <= 0)
+        {
+            transform.position = new Vector3(transform.position.x, 1, transform.position.z);
+            //Debug.Log("ses");
         }
     }
 }
