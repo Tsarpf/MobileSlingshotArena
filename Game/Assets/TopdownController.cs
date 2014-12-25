@@ -11,16 +11,13 @@ public class TopdownController : MonoBehaviour
     public bool alive = true;
 
     private Transform thisTransform;
-    private CharacterController character;
     private Vector3 velocity;						// Used for continuing momentum while in air
-    private bool canJump = true;
     Quaternion zeroQuaternion = new Quaternion(0, 0, 0, 0);
 
     void Start()
     {
         // Cache component lookup at startup instead of doing this every frame	
         thisTransform = gameObject.GetComponent< Transform >();
-        character = gameObject.GetComponent<CharacterController>();
         
         // Move the character to the correct start position in the level, if one exists
         var spawn = GameObject.Find( "PlayerSpawn" );

@@ -33,6 +33,7 @@ public class Joystick : MonoBehaviour
     public bool normalize = false; 							// Normalize output after the dead-zone?
     public Vector2 position; 									// [-1, 1] in x,y
     public int tapCount;											// Current tap count
+    public bool leftControl;
 
     private int lastFingerId = -1;								// Finger last used for this joystick
     private float tapTimeWindow;							// How much time there is left for a tap to occur
@@ -55,11 +56,28 @@ public class Joystick : MonoBehaviour
         //gui = gameObject.GetComponent( GUITexture );
         
         
+        Rect ph = gui.pixelInset;
+        if(leftControl)
+        {
+            //gui.pixelInset.x = 
+            //gui.pixelInset.y = 
+
+            ph.x = Screen.width / 10;
+            ph.y = Screen.height/ 10;
+
+        }
+        else //then it's right ...?
+        {
+            ph.x = Screen.width - (Screen.width / 10) - ph.width;
+            ph.y = Screen.height/ 10;
+        }
+        gui.pixelInset = ph;
+
         // Store the default rect for the gui, so we can snap back to it
         defaultRect = gui.pixelInset;	
         
-        defaultRect.x += transform.position.x * Screen.width;// + gui.pixelInset.x; // -  Screen.width * 0.5;
-        defaultRect.y += transform.position.y * Screen.height;// - Screen.height * 0.5;
+        //defaultRect.x += transform.position.x * Screen.width;// + gui.pixelInset.x; // -  Screen.width * 0.5;
+        //defaultRect.y += transform.position.y * Screen.height;// - Screen.height * 0.5;
         
         //transform.position.x = 0.0;
         //transform.position.y = 0.0;
