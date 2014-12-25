@@ -54,6 +54,7 @@ public class TopdownController : MonoBehaviour {
         this.enabled = false;
     }
 
+   Vector3 previousPosition;
     public void Update()
     {
         if(alive)
@@ -71,52 +72,18 @@ public class TopdownController : MonoBehaviour {
         Vector2 absJoyPos = new Vector2( Mathf.Abs( moveJoystick.position.x ), Mathf.Abs( moveJoystick.position.y ) );
         movement *= speed * ( ( absJoyPos.x > absJoyPos.y ) ? absJoyPos.x : absJoyPos.y );
         
-        // Check for jump
-        //if ( character.isGrounded )
-        //{
-        //    if ( !rotateJoystick.IsFingerDown() )
-        //        canJump = true;
-            
-        //    if ( canJump && rotateJoystick.tapCount == 2 )
-        //    {
-        //        // Apply the current movement to launch velocity
-        //        velocity = character.velocity;
-        //        velocity.y = jumpSpeed;
-        //        canJump = false;
-        //    }
-        //}
-        //else
-        //{			
-        //    // Apply gravity to our velocity to diminish it over time
-        //    velocity.y += Physics.gravity.y * Time.deltaTime;
-            
-        //    // Adjust additional movement while in-air
-        //    movement.x *= inAirMultiplier;
-        //    movement.z *= inAirMultiplier;
-        //}
-        
         movement += velocity;
         movement += Physics.gravity;
         movement *= Time.deltaTime;
 
-        transform.position += movement;
-        
-        // Actually move the character
-        //character.Move( movement );
-        
-        //if ( character.isGrounded )
-        //    // Remove any persistent velocity after landing
-        //    velocity = Vector3.zero;
-        
-        // Face the character to match with where she is moving
-        //FaceMovementDirection();	
-        
-        // Scale joystick input with rotation speed
-
-        
-        // Rotate around the character horizontally in world, but use local space
-        // for vertical rotation
-        //cameraPivot.Rotate( 0, camRotation.x, 0, Space.World );
-        //cameraPivot.Rotate( camRotation.y, 0, 0 );
+        if (moveJoystick.position == Vector2.zero) 
+        {
+            transform.position = previousPosition;
+        }
+        else
+        {
+            transform.position += movement;
+        }
+        previousPosition = transform.position;
     }
 }

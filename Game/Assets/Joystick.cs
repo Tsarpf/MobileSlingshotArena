@@ -46,13 +46,9 @@ public class Joystick : MonoBehaviour
     private Vector2 guiTouchOffset;						// Offset to apply to touch input
     private Vector2 guiCenter;							// Center of joystick
 
-    public GameObject character;
-    bool stop = false;
-    Vector3 characterPosition;
-
     void Start()
     {
-        characterPosition = character.transform.position;
+        //characterPosition = character.transform.position;
         // Cache this component at startup instead of looking up every frame	
 
         gui = gameObject.GetComponent<GUITexture>();
@@ -116,20 +112,6 @@ public class Joystick : MonoBehaviour
             gui.color = derp;
         }
 
-        if(!stop)
-        {
-            characterPosition = character.transform.position;
-            if (character.rigidbody)
-            {
-                character.rigidbody.velocity = new Vector3(0, 0, 0);
-            }
-            stop = true;
-        }
-        else
-        {
-            character.transform.position = characterPosition;
-        }
-
     }
 
     public bool IsFingerDown() 
@@ -167,7 +149,7 @@ public class Joystick : MonoBehaviour
             ResetJoystick();
         else
         {
-            stop = false;
+            //stop = false;
             for(int i = 0; i < count; i++)
             {
                 Touch touch = Input.GetTouch(i);			
