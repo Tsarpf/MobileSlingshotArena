@@ -70,7 +70,7 @@ public class TopdownController : MonoBehaviour
             {
                 //direction.eulerAngles = new Vector3(-sling.dir.x,-sling.dir.y, -sling.dir.z);
                 //transform.rotation = direction;
-                transform.rotation = Quaternion.LookRotation(-sling.dir);
+                transform.rotation = Quaternion.LookRotation(sling.dir);
                 //transform.rotation = rotation; 
                  //sling.dir
             }
