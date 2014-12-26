@@ -4,27 +4,34 @@ using System.Collections;
 public class Slingshot : MonoBehaviour {
 
     public Joystick aimJoystick;
+    public Vector3 dir;
+    public bool aiming = false;
 	// Use this for initialization
 	void Start () {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	            Vector3 movement = new Vector3(aimJoystick.position.x, aimJoystick.position.y, 0);
+	void Update ()
+    {
+        Vector3 movement = new Vector3(aimJoystick.position.x, aimJoystick.position.y, 0);
 
-                movement.z = 0;
-                movement.Normalize(); // Adjust magnitude after ignoring vertical movement
+        dir = new Vector3(movement.x, 0, movement.y);
 
-                // Let's use the largest component of the joystick position for the speed.
-                //Vector2 absJoyPos = new Vector2(Mathf.Abs(moveJoystick.position.x), Mathf.Abs(moveJoystick.position.y));
-                //movement *= speed * ((absJoyPos.x > absJoyPos.y) ? absJoyPos.x : absJoyPos.y);
+        if (aimJoystick.position == Vector2.zero)
+        {
+            aiming = false;
+        }
+        else
+        {
+            aiming = true;
+        }
 
-                //movement += velocity;
-                //movement += Physics.gravity;
-                //movement *= Time.deltaTime;
 
 
-                //transform.position += movement;
-	}
+        if(aiming)
+        {
+            //Vector3 relativePos = target.position - transform.position;
+        }
+    }
 }

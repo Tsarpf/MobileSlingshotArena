@@ -4,6 +4,7 @@ using System.Collections;
 public class TopdownController : MonoBehaviour 
 {
     public Joystick moveJoystick;
+    public Slingshot sling;
 
     public float speed = 5;								// Ground speed
     public float jumpSpeed = 8;
@@ -35,6 +36,7 @@ public class TopdownController : MonoBehaviour
     }
 
    Vector3 previousPosition;
+   Quaternion previousRotation;
     public void Update()
     {
         if (moveJoystick.position == Vector2.zero)
@@ -63,7 +65,19 @@ public class TopdownController : MonoBehaviour
         if (alive)
         {
             //Don't trip over
-            transform.rotation = zeroQuaternion;
+            //Quaternion direction = new Quaternion();
+            if (sling.aiming)
+            {
+                //direction.eulerAngles = new Vector3(-sling.dir.x,-sling.dir.y, -sling.dir.z);
+                //transform.rotation = direction;
+                transform.rotation = Quaternion.LookRotation(-sling.dir);
+                //transform.rotation = rotation; 
+                 //sling.dir
+            }
+            else
+            {
+                transform.rotation = previousRotation;
+            }
         }
         else
         {
@@ -75,5 +89,6 @@ public class TopdownController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, 1, transform.position.z);
             //Debug.Log("ses");
         }
+        previousRotation = transform.rotation;
     }
 }

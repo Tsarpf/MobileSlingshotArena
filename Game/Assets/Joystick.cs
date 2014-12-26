@@ -63,25 +63,19 @@ public class Joystick : MonoBehaviour
             //gui.pixelInset.y = 
 
             ph.x = Screen.width / 10;
-            ph.y = Screen.height/ 10;
+            ph.y = Screen.height/ 8;
 
         }
         else //then it's right ...?
         {
             ph.x = Screen.width - (Screen.width / 10) - ph.width;
-            ph.y = Screen.height/ 10;
+            ph.y = Screen.height/ 8;
         }
         gui.pixelInset = ph;
 
         // Store the default rect for the gui, so we can snap back to it
         defaultRect = gui.pixelInset;	
         
-        //defaultRect.x += transform.position.x * Screen.width;// + gui.pixelInset.x; // -  Screen.width * 0.5;
-        //defaultRect.y += transform.position.y * Screen.height;// - Screen.height * 0.5;
-        
-        //transform.position.x = 0.0;
-        //transform.position.y = 0.0;
-
         transform.position = new Vector2(0.0f,0.0f);
             
         if ( touchPad )
